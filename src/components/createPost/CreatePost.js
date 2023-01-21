@@ -42,9 +42,7 @@ function CreatePost() {
             setCaption('');
             setPostImg('');
         }
-        
-
-    }
+    };
 
     return (
         <div className="CreatePost">

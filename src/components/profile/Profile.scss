@@ -5,12 +5,13 @@
         gap: 20px;
     }
     .left-part {
-        flex: 2;
+        flex: 1;
         overflow-y: auto;
+        margin-top: 20px;
     }
     .right-part {
-        flex: 1;
-        margin-top: 20px;
+        flex: 2;
+        
     }
 
     .profile-card {

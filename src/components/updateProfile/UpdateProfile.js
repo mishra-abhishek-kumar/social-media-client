@@ -3,13 +3,17 @@ import "./UpdateProfile.scss";
 import "./UpdateProfile.scss";
 import dummyUserImg from '../../assets/user.png'
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading, updateMyProfile } from "../../redux/slices/appConfigSlice";
+import { updateMyProfile } from "../../redux/slices/appConfigSlice";
+import { axiosClient } from "../../utils/axiosClient";
+import { useNavigate } from "react-router";
+import { KEY_ACCESS_TOKEN, removeItem } from "../../utils/localStorageManager";
 
 function UpdateProfile() {
     const myProfile = useSelector((state) => state.appConfigReducer.myProfile);
     const [name, setName] = useState("");
     const [bio, setBio] = useState("");
     const [userImg, setUserImg] = useState("");
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -38,6 +42,18 @@ function UpdateProfile() {
             userImg
         }));
     }
+
+    const deleteUser = async() => {
+        try {
+            const result = await axiosClient.delete('user/del', {userId: myProfile?._id});
+            removeItem(KEY_ACCESS_TOKEN);
+			navigate('/login')
+            console.log('User Deleted', result);
+
+        } catch (error) {
+            console.log('what is th error', error);
+        } 
+    };
 
     return (
         <div className="UpdateProfile">
@@ -73,7 +89,7 @@ function UpdateProfile() {
                         <input type="submit" className="btn-primary" onClick={handleSubmit}/>
                     </form>
 
-                    <button className="delete-account btn-primary">
+                    <button className="delete-account btn-primary" onClick={deleteUser}>
                         Delete Account
                     </button>
                 </div>

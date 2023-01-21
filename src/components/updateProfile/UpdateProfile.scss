@@ -7,6 +7,7 @@
     .left-part {
         flex: 1;
         text-align: center;
+        padding-top: 20px;
 
         .input-user-img {
             display: flex;
@@ -14,10 +15,10 @@
             justify-content: center;
 
             .labelImg {
-                width: 80px;
-                height: 80px;
+                width: 150px;
+                height: 150px;
                 border-radius: 50%;
-                border: 2px dashed var(--accent-color);
+                border: 2px solid var(--accent-color);
                 cursor: pointer;
 
                 img {
