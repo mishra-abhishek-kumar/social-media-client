@@ -45,7 +45,9 @@ function Profile() {
                     <div className="profile-card">
                         <img
                             className="user-img"
-                            src={userImg ? userImg : dummyUserImg}
+                            src={userImg ? userProfile?.avatar?.url : dummyUserImg}
+                            // src={userProfile?.avatar?.url}
+
                             alt=""
                         />
                         <h3 className="user-name">{userProfile?.name}</h3>
