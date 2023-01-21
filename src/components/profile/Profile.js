@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import "./Profile.scss";
-import userImg from "../../assets/user.png";
+import dummyUserImg from "../../assets/user.png";
 import { useNavigate, useParams } from "react-router";
 import CreatePost from "../createPost/CreatePost";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ function Profile() {
     const dispatch = useDispatch();
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
+    const [userImg, setUserImg] = useState("");
 
     useEffect(() => {
         dispatch(
@@ -24,6 +25,7 @@ function Profile() {
                 userId: params.userId,
             })
         );
+        setUserImg(myProfile?.avatar?.url)
         setIsMyProfile(myProfile?._id === params.userId);
         setIsFollowing(
             feedData?.followings?.find((item) => item._id === params.userId)
@@ -40,16 +42,10 @@ function Profile() {
         <div className="Profile">
             <div className="container">
                 <div className="left-part">
-                    {isMyProfile && <CreatePost />}
-                    {userProfile?.posts?.map((post) => (
-                        <Post key={post._id} post={post} />
-                    ))}
-                </div>
-                <div className="right-part">
                     <div className="profile-card">
                         <img
                             className="user-img"
-                            src={userProfile?.avatar?.url}
+                            src={userImg ? userImg : dummyUserImg}
                             alt=""
                         />
                         <h3 className="user-name">{userProfile?.name}</h3>
@@ -82,6 +78,12 @@ function Profile() {
                             </button>
                         )}
                     </div>
+                </div>
+                <div className="right-part">
+                    {isMyProfile && <CreatePost />}
+                    {userProfile?.posts?.map((post) => (
+                        <Post key={post._id} post={post} />
+                    ))}
                 </div>
             </div>
         </div>
